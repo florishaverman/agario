@@ -77,7 +77,7 @@ class Player:
     def draw(self,win):
         # draw a blue circle onto the surface
         radius= math.sqrt(self.size/math.pi)
-        pygame.draw.circle(win, self.color, ((self.x-x_compensation-700)*scalar+700, (self.y-y_compensation-400)*scalar+400), round(self.radius*scalar), 0)
+        pygame.draw.circle(win, self.color, matrix(self.x,self.y) ,round(self.radius*scalar), 0)
 
     def eat_dots(self, dots):
         for x,dot in enumerate(dots):
@@ -112,7 +112,12 @@ class Dot:
         self.y = random.randint(1, FIELD_LENGTH)
         self.color = colors[random.randint(0, 4)]
     def draw(self,win):
-        pygame.draw.circle(win, self.color, ((self.x-x_compensation-700)*scalar+700, (self.y-y_compensation-400)*scalar+400), round(5*scalar), 0)
+        pygame.draw.circle(win, self.color, matrix(self.x,self.y), round(5*scalar), 0)
+
+def matrix(x,y):
+    x_onscreen = (x-x_compensation-700)*scalar+700
+    y_onscreen = (y-y_compensation-400)*scalar+400
+    return (round(x_onscreen),round(y_onscreen))
 
 def draw_window(win, players,dots,score):
     win.fill(BLACK)
@@ -122,7 +127,7 @@ def draw_window(win, players,dots,score):
         player.draw(win)
 
     # draw the text's background rectangle onto the surface
-    pygame.draw.polygon(win, GREEN, (((0-x_compensation-700)*scalar+700, (0-y_compensation-400)*scalar+400), ((FIELD_WIDTH-x_compensation-700)*scalar+700, (0-y_compensation-400)*scalar+400), ((FIELD_WIDTH-x_compensation-700)*scalar+700, (FIELD_LENGTH-y_compensation-400)*scalar+400), ((0-x_compensation-700)*scalar+700, (FIELD_LENGTH-y_compensation-400)*scalar+400)),round(6*scalar))
+    pygame.draw.polygon(win, GREEN, (matrix(0,0), matrix(FIELD_WIDTH,0),matrix(FIELD_WIDTH,FIELD_LENGTH),matrix(0,FIELD_LENGTH) ),round(6*scalar))
     # score
     score_label = STAT_FONT.render("Score: " + str(round(score)),1,(255,255,255))
     win.blit(score_label, (WIN_WIDTH - score_label.get_width() - 15, 10))
