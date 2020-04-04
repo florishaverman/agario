@@ -8,6 +8,12 @@ from shapely.geometry import LineString
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
+"""
+git add *
+git commit -m "stay inside"
+git push -u origin master
+
+"""
 #initialize and difine a font
 pygame.font.init()
 STAT_FONT = pygame.font.SysFont("comicsans", 50)
@@ -80,6 +86,9 @@ class Player:
         if self.y<self.radius or self.y>FIELD_LENGTH-self.radius:
             self.direction= -self.direction
         self.vel=25/(self.radius)**0.5
+
+        self.x = max( min(self.x, FIELD_WIDTH-self.radius ), self.radius)
+        self.y = max( min(self.y, FIELD_LENGTH-self.radius ), self.radius)
 
     def draw(self,win):
         # draw a blue circle onto the surface
