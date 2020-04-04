@@ -3,10 +3,10 @@ from function import *
 def main():
     clock = pygame.time.Clock()
     win = pygame.display.set_mode((WIN_WIDTH,WIN_HEIGHT))
-    print(win)
     dots = []
     for x in range(1000):
         dots.append(Dot())
+
     players = []
     players.append(Player(players,True))
     for x in range(25):
@@ -24,12 +24,13 @@ def main():
                 run = False
             if event.type == pygame.MOUSEMOTION:
                 players[0].change_direction(event.pos[0],event.pos[1])
+
         rem = []
         for player in players:
             player.move()
 
         for x, player in enumerate(players):
-            dots=player.eat_dots(dots)
+            dots = player.eat_dots(dots)
             hoi = player.eat_player(players,x)
             if hoi[0]:
                 rem.append(hoi[1])

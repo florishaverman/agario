@@ -7,20 +7,22 @@ import random
 from shapely.geometry import LineString
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
-pygame.font.init()
 
+#initialize and difine a font
+pygame.font.init()
 STAT_FONT = pygame.font.SysFont("comicsans", 50)
 
+#set width and length of the screen and the playing field
 WIN_WIDTH = 1400
 WIN_HEIGHT = 800
-FIELD_WIDTH = 5000
-FIELD_LENGTH = 5000
+FIELD_WIDTH = 4000
+FIELD_LENGTH = 4000
 
-GEN=0
-
+#global variables to get every point on the screen of relevant
 scalar = 2
 x_compensation =0
 y_compensation =0
+
 #colors
 RED = (255,0,0)
 WHITE = (255,255,255)
@@ -29,14 +31,15 @@ BLACK = (0,0,0)
 BLUE = (0,0,255)
 ORANGE = (255,128,0)
 YELLOW = (255,255,0)
-
 colors = [BLUE,GREEN,RED,WHITE,ORANGE]
 
-WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-pygame.display.set_caption('Welkom to hole.io')
+pygame.display.set_caption('Welkom to agar.io')
 
+#a player is a circle on the screen both controled by the player as not controled
+#this is needed for later implementation of the ai
 class Player:
     def __init__(self,players, real_player = False):
+        # a new player is placed somewhere on the sreen and checked that is doesnot die when initialized
         self.x = random.randint(100, FIELD_WIDTH-60)
         self.y = random.randint(1, FIELD_LENGTH-60)
         self.color = colors[random.randint(0, 4)]
@@ -50,9 +53,10 @@ class Player:
             self.radius = 10
             self.size = math.pi*self.radius**2
 
-
         start = True
-        while start:
+        i=0
+        while start and i<10:
+            i+= 1
             if self.eat_player(players)[0]:
                 self.x = random.randint(100, FIELD_WIDTH-60)
                 self.y = random.randint(1, FIELD_LENGTH-60)
@@ -60,6 +64,9 @@ class Player:
             else:start = False
 
     def move(self):
+        """
+        this is the function that is called to move a player and should be called every frame for every players
+        """
         global x_compensation,y_compensation, scalar
         if self.real_player:
             x_compensation = self.x -(WIN_WIDTH/2)
@@ -68,11 +75,11 @@ class Player:
 
         self.x+=  self.vel * math.cos(self.direction)
         self.y-=  self.vel * math.sin(self.direction)
-        if self.x-math.sqrt(self.size/math.pi)<0 or self.x+math.sqrt(self.size/math.pi)>FIELD_WIDTH:
+        if self.x<self.radius or self.x>FIELD_WIDTH-self.radius:
             self.direction= math.pi-self.direction
-        if self.y-math.sqrt(self.size/math.pi)<0 or self.y+math.sqrt(self.size/math.pi)>FIELD_LENGTH:
+        if self.y<self.radius or self.y>FIELD_LENGTH-self.radius:
             self.direction= -self.direction
-        self.vel=5*(25/self.radius)**0.1
+        self.vel=25/(self.radius)**0.5
 
     def draw(self,win):
         # draw a blue circle onto the surface
@@ -115,8 +122,8 @@ class Dot:
         pygame.draw.circle(win, self.color, matrix(self.x,self.y), round(5*scalar), 0)
 
 def matrix(x,y):
-    x_onscreen = (x-x_compensation-700)*scalar+700
-    y_onscreen = (y-y_compensation-400)*scalar+400
+    x_onscreen = (x-x_compensation-(WIN_WIDTH/2))*scalar+(WIN_WIDTH/2)
+    y_onscreen = (y-y_compensation-(WIN_HEIGHT/2))*scalar+(WIN_HEIGHT/2)
     return (round(x_onscreen),round(y_onscreen))
 
 def draw_window(win, players,dots,score):
