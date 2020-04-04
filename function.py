@@ -77,7 +77,7 @@ class Player:
     def draw(self,win):
         # draw a blue circle onto the surface
         radius= math.sqrt(self.size/math.pi)
-        pygame.draw.circle(win, self.color, ((self.x-x_compensation-700)*scalar+700, (self.y-y_compensation-400)*scalar+400), radius*scalar, 0)
+        pygame.draw.circle(win, self.color, ((self.x-x_compensation-700)*scalar+700, (self.y-y_compensation-400)*scalar+400), round(self.radius*scalar), 0)
 
     def eat_dots(self, dots):
         for x,dot in enumerate(dots):
@@ -112,7 +112,7 @@ class Dot:
         self.y = random.randint(1, FIELD_LENGTH)
         self.color = colors[random.randint(0, 4)]
     def draw(self,win):
-        pygame.draw.circle(win, self.color, ((self.x-x_compensation-700)*scalar+700, (self.y-y_compensation-400)*scalar+400), 5*scalar, 0)
+        pygame.draw.circle(win, self.color, ((self.x-x_compensation-700)*scalar+700, (self.y-y_compensation-400)*scalar+400), round(5*scalar), 0)
 
 def draw_window(win, players,dots,score):
     win.fill(BLACK)
