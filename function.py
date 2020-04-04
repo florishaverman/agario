@@ -8,13 +8,15 @@ from shapely.geometry import LineString
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
+
 """
 git add *
 git commit -m "zekerheid"
 git push -u origin master
-
 """
+
 #initialize and difine a font
+pygame.init()
 pygame.font.init()
 STAT_FONT = pygame.font.SysFont("comicsans", 50)
 
