@@ -17,9 +17,6 @@ FIELD_WIDTH = 5000
 FIELD_LENGTH = 5000
 
 GEN=0
-level=1
-levels = [level_1,level_4,level_2,level_3]
-level_scores = [1,6,8,10]
 
 scalar = 2
 x_compensation =0
@@ -116,11 +113,6 @@ class Dot:
         self.color = colors[random.randint(0, 4)]
     def draw(self,win):
         pygame.draw.circle(win, self.color, ((self.x-x_compensation-700)*scalar+700, (self.y-y_compensation-400)*scalar+400), 5*scalar, 0)
-
-
-def cordinate(x):
-    pass
-
 
 def draw_window(win, players,dots,score):
     win.fill(BLACK)
