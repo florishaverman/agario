@@ -33,14 +33,15 @@ def main():
             player.move()
 
         for x, player in enumerate(players):
+            if i%100 == 0 and x>0:
+                player.change_direction()
             dots = player.eat_dots(dots)
             hoi = player.eat_player(players,x)
             if hoi[0]:
                 rem.append(hoi[1])
         for r in rem:
             try:
-                players.remove(r)
-                players.append(Player(players))
+                players[r] = Player(players)
             except: pass
         draw_window(win,players,dots,players[0].size)
     pygame.quit()

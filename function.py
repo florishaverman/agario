@@ -9,6 +9,12 @@ from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
 
+"""
+git add *
+git commit -m "zekerheid"
+git push -u origin master
+"""
+
 #initialize and difine a font
 pygame.init()
 pygame.font.init()
@@ -52,7 +58,7 @@ class Player:
         self.real_player = real_player
         if real_player:
             self.color = YELLOW
-            self.radius = 10
+            self.radius = 50
             self.size = math.pi*self.radius**2
 
         start = True
@@ -107,16 +113,19 @@ class Player:
                 if distance <= self.radius*0.9+10 and not x==y:
                     self.size += player.size
                     self.radius = math.sqrt(self.size/math.pi)
-                    return [True, player]
+                    return [True, x]
                 else: pass
         return [False]
 
-    def change_direction(self, goal_x,goal_y):
+    def change_direction(self, goal_x=0,goal_y=0):
+
         distance= math.sqrt((goal_x-700)**2+(goal_y-400)**2)
         if (goal_y-400)<0:
             self.direction = math.acos((goal_x-700)/distance)
         if (goal_y-400)>0:
             self.direction = -math.acos((goal_x-700)/distance)
+        if goal_x ==0 and goal_y ==0:
+            self.direction = random.random()*math.pi*2
 
 class Dot:
     def __init__(self):
