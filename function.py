@@ -4,8 +4,6 @@ import time
 import math
 import neat
 import random
-
-from tracks import *
 from shapely.geometry import LineString
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
