@@ -2,6 +2,9 @@ from function import *
 
 def main():
     clock = pygame.time.Clock()
+    infoObject = pygame.display.Info()
+    WIN_WIDTH = infoObject.current_w
+    WIN_HEIGHT = infoObject.current_h
     win = pygame.display.set_mode((WIN_WIDTH,WIN_HEIGHT))
     dots = []
     for x in range(1000):
